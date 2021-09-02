@@ -21,15 +21,13 @@ DIR_COLOR = '\033[94m'
 ERR_COLOR = '\033[91m'
 RESET_COLOR = '\033[0m'
 
-
 # ----- tree -------------------------------------------------------------------
 
-def tree(cur_dir: str, spacers: list) -> None:
+def tree(cur_dir: str, space: str) -> None:
     global BAR_CORNER, BAR_VERTICAL, FULL_SPACE, BAR_SPACE, FULL_BAR,\
             DIR_TOKEN, DIR_COLOR, ERR_COLOR, RESET_COLOR
     if cur_dir == '.':
         print(cur_dir)
-    space = ''.join(spacers)
     try:
         nodes = sorted(listdir(cur_dir), key = lambda x: (path.isdir(x), x))
     except PermissionError as e:
@@ -46,19 +44,13 @@ def tree(cur_dir: str, spacers: list) -> None:
         token = DIR_TOKEN if isdir else ''
         print(f'{space}{cvbar}{FULL_BAR}{color}{node}{RESET_COLOR}{token}')
         if isdir:
-            tree(full, spacers + [FULL_SPACE if last else BAR_SPACE])
-
-
+            tree(full, space + (FULL_SPACE if last else BAR_SPACE))
 
 # ----- exe entry --------------------------------------------------------------
 
 if __name__ == '__main__':
-    tree('.', list())
-
+    tree('.', '')
 
 # ----- end of file ------------------------------------------------------------
-
-
-
 
 
